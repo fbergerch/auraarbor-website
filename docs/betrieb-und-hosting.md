@@ -11,12 +11,14 @@ Einmalig einzurichten unter Repository › **Settings › Secrets and variables 
 | Secret | Inhalt |
 | --- | --- |
 | `FTP_SERVER` | Hoststar-Servername `lx#.hoststar.hosting` (My Panel › Hosting › Übersicht) – nicht die eigene Domain |
-| `FTP_USERNAME` | FTP-Benutzername |
-| `FTP_PASSWORD` | FTP-Passwort |
-| `FTP_SERVER_DIR` | Ordner von auraarbor.com auf dem Server, so wie er in FileZilla (SFTP, Port 5544) erscheint |
+| `FTP_USERNAME` | FTP-Benutzer **der Domain auraarbor.com** (Besitzer `auraarbo…`) |
+| `FTP_PASSWORD` | Passwort dieses Benutzers |
+| `FTP_SERVER_DIR` | **`public_html`** |
 | `FTP_PORT` | optional, Standard `5544` |
 
-Liegt auraarbor.com im selben Hoststar-Hosting wie bergerpartners.ch, sind Server, Benutzer und Passwort dieselben – nur `FTP_SERVER_DIR` zeigt auf den Ordner der Aura-Arbor-Domain. **Nie** den Ordner von bergerpartners.ch eintragen.
+**Wichtig:** Der Domain-Benutzer von auraarbor.com ist von Hoststar in den Ordner `auraarbor.com` eingesperrt – für ihn ist dieser Ordner die Wurzel. Deshalb lautet der Pfad nur `public_html`, nicht `auraarbor.com/public_html` (so zeigt ihn FileZilla nur beim Hauptbenutzer an). Andere Domains (bergerpartners.ch, berger.tv) kann dieser Login nicht erreichen – eine Verwechslung ist ausgeschlossen.
+
+Existiert der Zielordner nicht, bricht der Workflow vor dem Upload ab und listet im Log das Startverzeichnis, den Inhalt von `public_html` und den Titel der dortigen Startseite auf.
 
 Beim ersten Lauf werden alle Dateien hochgeladen, danach nur noch geänderte. Dateien auf dem Server, die nicht aus diesem Repository stammen, bleiben unangetastet (auch nach dem Löschen einer Datei im Repo – dann auf dem Server von Hand entfernen).
 
@@ -26,8 +28,8 @@ Nur der Inhalt von `site/` kommt auf den Server – `docs/` und `tools/` nicht.
 
 ## 2. Domain von HubSpot zu Hoststar umziehen (einmalig)
 
-1. In Hoststar (My Panel) die Domain **auraarbor.com** dem Hosting hinzufügen bzw. als Zusatzdomain mit eigenem Ordner anlegen. Diesen Ordner als `FTP_SERVER_DIR` eintragen.
-2. Ersten Upload abwarten (Actions grün) und die Seite über die temporäre Hoststar-Vorschau bzw. den Servernamen prüfen.
+1. ✓ Domain auraarbor.com ist in Hoststar angelegt, erster Upload am 03.11.2026 erfolgreich.
+2. Seite vor der DNS-Umstellung prüfen (z. B. über die Vorschau-Funktion im Hoststar My Panel oder einen Eintrag in der lokalen hosts-Datei).
 3. SSL-Zertifikat (Let's Encrypt) für `auraarbor.com` und `www.auraarbor.com` in Hoststar aktivieren.
 4. DNS umstellen: A-/AAAA-Record von `auraarbor.com` und `www` auf Hoststar zeigen lassen (Werte laut Hoststar). Wo die DNS heute verwaltet werden, steht beim Domain-Registrar.
 5. **E-Mail nicht vergessen:** MX-/SPF-Einträge für `hello@auraarbor.com` beim Umstellen unverändert übernehmen.
