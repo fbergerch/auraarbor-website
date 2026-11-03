@@ -83,17 +83,15 @@ jobs:
           if [ $? -ne 0 ]; then
             echo "::error::Zielordner aus FTP_SERVER_DIR existiert auf dem Server nicht. Es wurde nichts hochgeladen."
             echo "Vorhandene Ordner im Startverzeichnis des FTP-Benutzers (so FTP_SERVER_DIR eintragen, z. B. Ordnername/Unterordner):"
-            lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" 2>/dev/null <<EOF | sed 's/^/  /'
+            lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" 2>/dev/null <<EOF | grep -iE '^(---|sftp://|[a-z0-9_.-]+/$|[-dl][rwx-]{9}|.*<title|.*<h1)' | sed 's/^/  /'
           $LFTP_SETUP
           echo "--- Startverzeichnis (pwd) ---"
           pwd
           cls -1
-          echo "--- Inhalt von public_html/ ---"
-          cls -1 public_html/
-          echo "--- eine Ebene höher (..) ---"
-          cls -1 ..
-          echo "--- Wurzel (/) ---"
-          cls -1 /
+          echo "--- Inhalt von public_html/ (Grösse, Datum) ---"
+          cls -l public_html/
+          echo "--- Titel der vorhandenen Startseite ---"
+          cat public_html/index.html
           bye
           EOF
             echo "::notice::Ordnerliste steht im Log dieses Schritts. FTP_SERVER_DIR unter Settings › Secrets korrigieren und den Workflow neu starten."
