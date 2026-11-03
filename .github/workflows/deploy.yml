@@ -86,6 +86,8 @@ jobs:
             lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" 2>/dev/null <<EOF | sed 's/^/  /'
           $LFTP_SETUP
           cls -1
+          echo "--- Inhalt von public_html/ ---"
+          cls -1 public_html/
           bye
           EOF
             echo "::notice::Ordnerliste steht im Log dieses Schritts. FTP_SERVER_DIR unter Settings › Secrets korrigieren und den Workflow neu starten."
