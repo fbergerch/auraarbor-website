@@ -85,9 +85,15 @@ jobs:
             echo "Vorhandene Ordner im Startverzeichnis des FTP-Benutzers (so FTP_SERVER_DIR eintragen, z. B. Ordnername/Unterordner):"
             lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" 2>/dev/null <<EOF | sed 's/^/  /'
           $LFTP_SETUP
+          echo "--- Startverzeichnis (pwd) ---"
+          pwd
           cls -1
           echo "--- Inhalt von public_html/ ---"
           cls -1 public_html/
+          echo "--- eine Ebene höher (..) ---"
+          cls -1 ..
+          echo "--- Wurzel (/) ---"
+          cls -1 /
           bye
           EOF
             echo "::notice::Ordnerliste steht im Log dieses Schritts. FTP_SERVER_DIR unter Settings › Secrets korrigieren und den Workflow neu starten."
