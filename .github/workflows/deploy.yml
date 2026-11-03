@@ -66,13 +66,36 @@ jobs:
           FTP_PORT: ${{ secrets.FTP_PORT }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp >/dev/null
-          set +e
-          lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" > lftp.log 2>&1 <<EOF
-          set sftp:auto-confirm yes
+          LFTP_SETUP='set sftp:auto-confirm yes
           set sftp:connect-program "ssh -a -x -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
           set net:timeout 20
           set net:max-retries 2
-          set net:reconnect-interval-base 5
+          set net:reconnect-interval-base 5'
+          set +e
+
+          # 1) Zielordner prüfen – existiert er nicht, wird NICHTS hochgeladen
+          lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" > dircheck.log 2>&1 <<EOF
+          $LFTP_SETUP
+          set cmd:fail-exit yes
+          cd "$FTP_SERVER_DIR"
+          bye
+          EOF
+          if [ $? -ne 0 ]; then
+            echo "::error::Zielordner aus FTP_SERVER_DIR existiert auf dem Server nicht. Es wurde nichts hochgeladen."
+            echo "Vorhandene Ordner im Startverzeichnis des FTP-Benutzers (so FTP_SERVER_DIR eintragen, z. B. Ordnername/Unterordner):"
+            lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" 2>/dev/null <<EOF | sed 's/^/  /'
+          $LFTP_SETUP
+          cls -1
+          bye
+          EOF
+            echo "::notice::Ordnerliste steht im Log dieses Schritts. FTP_SERVER_DIR unter Settings › Secrets korrigieren und den Workflow neu starten."
+            exit 1
+          fi
+
+          # 2) Hochladen
+          lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" > lftp.log 2>&1 <<EOF
+          $LFTP_SETUP
+          set cmd:fail-exit yes
           debug 3
           cd "$FTP_SERVER_DIR"
           mirror --reverse --verbose --no-perms --parallel=4 --exclude-glob .DS_Store ./site/ .
