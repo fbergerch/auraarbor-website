@@ -1,6 +1,6 @@
 # Images
 
-Drop the final images into this folder with exactly these names. Until a file exists, the page shows a tinted green stand-in labeled with the file name.
+Drop the final images into `site/assets/img/` with exactly these names. Until a file exists, the page shows a tinted green stand-in labeled with the file name.
 
 Prefer WebP (quality ~80). Sizes are the recommended export width; height follows the aspect ratio.
 

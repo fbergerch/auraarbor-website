@@ -1,0 +1,89 @@
+# Veröffentlicht auraarbor.com automatisch per SFTP zu Hoststar, sobald auf main etwas unter site/ geändert wird.
+# Vorher läuft das Prüfskript – schlägt es fehl, wird nichts hochgeladen.
+#
+# Benötigte Secrets (GitHub › Settings › Secrets and variables › Actions):
+#   FTP_SERVER      Hoststar-Servername im Format lx#.hoststar.hosting (My Panel › Hosting › Übersicht/Monitoring)
+#                   – NICHT die eigene Domain
+#   FTP_USERNAME    FTP-Benutzername (My Panel › Hosting › FTP)
+#   FTP_PASSWORD    FTP-Passwort
+#   FTP_SERVER_DIR  Zielordner von auraarbor.com auf dem Server (so wie er in FileZilla erscheint)
+# Hinweis: Hoststar bietet für SFTP nur den älteren Host-Key-Typ ssh-rsa an; er wird unten gezielt erlaubt.
+# Optional:
+#   FTP_PORT        Standard 5544 (SFTP bei Hoststar)
+name: Website veröffentlichen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "tools/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {}   # manuell starten: Actions › Website veröffentlichen › Run workflow
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code holen
+        uses: actions/checkout@v5
+
+      - name: Python einrichten
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Website prüfen
+        run: python3 tools/check.py
+
+      - name: Zugangsdaten prüfen
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          missing=""
+          for v in FTP_SERVER FTP_USERNAME FTP_PASSWORD FTP_SERVER_DIR; do
+            [ -z "${!v}" ] && missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then echo "::error::Secrets fehlen:$missing (siehe docs/betrieb-und-hosting.md)"; exit 1; fi
+          case "$FTP_SERVER" in
+            *hoststar.hosting) echo "Server: Hoststar-Servername ok" ;;
+            *) echo "::warning::FTP_SERVER ist kein lx#.hoststar.hosting-Name – Hoststar empfiehlt den Servernamen statt der Domain" ;;
+          esac
+
+      - name: Per SFTP hochladen
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp >/dev/null
+          set +e
+          lftp --env-password -u "$FTP_USERNAME" -p "${FTP_PORT:-5544}" "sftp://$FTP_SERVER" > lftp.log 2>&1 <<EOF
+          set sftp:auto-confirm yes
+          set sftp:connect-program "ssh -a -x -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa"
+          set net:timeout 20
+          set net:max-retries 2
+          set net:reconnect-interval-base 5
+          debug 3
+          cd "$FTP_SERVER_DIR"
+          mirror --reverse --verbose --no-perms --parallel=4 --exclude-glob .DS_Store ./site/ .
+          bye
+          EOF
+          rc=$?
+          cat lftp.log
+          if [ $rc -ne 0 ]; then
+            # Fehlermeldungen als Annotation sichtbar machen (ohne Passwort)
+            grep -iE "error|fatal|denied|refused|timed out|not connected|no such|login|auth|host key|closed|reset" lftp.log \
+              | grep -v -- "$LFTP_PASSWORD" | tail -n 8 | sed 's/^/::error::SFTP: /'
+            echo "::error::SFTP-Upload fehlgeschlagen (Exit $rc)"
+            exit $rc
+          fi

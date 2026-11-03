@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Builds the static pages of auraarbor.com from shared header/footer partials.
 
-Run from the repo root:  python3 tools/build.py
-Edit page content in the PAGES section below, then rebuild and commit the .html output.
+Run from the repo root:  python3 tools/build.py   (writes into site/)
+Edit page content in the PAGES section below, then rebuild and commit the generated files.
+Never edit site/*.html by hand: tools/check.py fails if they drift from this script.
 No dependencies beyond the Python standard library.
 """
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "site"
 SITE = "https://auraarbor.com"
 YEAR = 2026
 
@@ -560,15 +562,22 @@ PAGES = [
      f'<script type="application/ld+json">{FAQ_LD}</script>\n'),
     ("imprint", "Imprint | Aura Arbor", "Legal information about Aura Arbor, c/o Berger Digital Partners, Trimbach, Switzerland.", IMPRINT, None, '<meta name="robots" content="noindex">\n'),
     ("privacy-policy", "Privacy Policy | Aura Arbor", "How Aura Arbor processes personal data in the app and on this website.", PRIVACY, None, ""),
-    ("404", "Page not found | Aura Arbor", "This page doesn't exist.", NOTFOUND, None, '<meta name="robots" content="noindex">\n'),
+    ("404", "Page not found | Aura Arbor", "This page doesn't exist or has moved. Head back to the Aura Arbor homepage.", NOTFOUND, None, '<meta name="robots" content="noindex">\n'),
 ]
 
-if __name__ == "__main__":
-    for slug, title, desc, body, active, head in PAGES:
-        (ROOT / f"{slug}.html").write_text(layout(slug, title, desc, body, active, head), encoding="utf-8")
+def render():
+    """All generated files as {relative path: content}. Used by build and by tools/check.py."""
+    files = {f"{slug}.html": layout(slug, title, desc, body, active, head)
+             for slug, title, desc, body, active, head in PAGES}
     urls = "".join(f"  <url><loc>{SITE}/{'' if s == 'index' else s}</loc></url>\n"
                    for s, *_ in PAGES if s not in ("404", "imprint"))
-    (ROOT / "sitemap.xml").write_text(
-        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
-    print("Built", len(PAGES), "pages")
+    files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+                            f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
+    files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n"
+    return files
+
+
+if __name__ == "__main__":
+    for name, content in render().items():
+        (OUT / name).write_text(content, encoding="utf-8")
+    print("Built", len(PAGES), "pages into site/")
