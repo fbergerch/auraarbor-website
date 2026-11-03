@@ -55,7 +55,7 @@ FOOTER = f'''<footer class="site-footer">
       </div>
       <div>
         <h4>Contact</h4>
-        <address>Aura Arbor<br>c/o VRFX Realtime Studio GmbH<br>Hirschengraben 41a<br>6003 Lucerne, Switzerland<br><a href="mailto:hello@auraarbor.com">hello@auraarbor.com</a></address>
+        <address>Aura Arbor<br>c/o Berger Digital Partners<br>Quaistrasse 53<br>4632 Trimbach, Switzerland<br><a href="mailto:hello@auraarbor.com">hello@auraarbor.com</a></address>
       </div>
       <div>
         <h4>Explore</h4>
@@ -245,7 +245,7 @@ HOME = f'''<section class="hero hero-home" id="top">
         <a class="btn" href="#beta">Join the early access list</a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <div class="hero-meta">Built in Lucerne, Switzerland</div>
+      <div class="hero-meta">Built in Switzerland</div>
     </div>
   </div>
 </section>
@@ -528,7 +528,7 @@ def legal(h1, sections, note):
 
 MIGRATE = "Paste the current text from the HubSpot page here before going live."
 IMPRINT = legal("Imprint", [
-    ("Contact", "Aura Arbor, c/o VRFX Realtime Studio GmbH, Hirschengraben 41a, 6003 Lucerne, Switzerland · hello@auraarbor.com. " + MIGRATE),
+    ("Contact", "Aura Arbor, c/o Berger Digital Partners, Quaistrasse 53, 4632 Trimbach, Switzerland · hello@auraarbor.com. " + MIGRATE),
     ("Disclaimer", MIGRATE), ("External links", MIGRATE), ("Intellectual property", MIGRATE)],
     "Content to migrate: the legal text from auraarbor.com/imprint is not copied automatically.")
 PRIVACY = legal("Privacy Policy", [
@@ -558,7 +558,7 @@ PAGES = [
     ("faq", "FAQ | Aura Arbor Immersive Coaching",
      "Equipment, setup, session length, confidentiality, and cost: the practical questions coaches ask before their first immersive session.", FAQ, "faq.html",
      f'<script type="application/ld+json">{FAQ_LD}</script>\n'),
-    ("imprint", "Imprint | Aura Arbor", "Legal information about Aura Arbor, c/o VRFX Realtime Studio GmbH, Lucerne, Switzerland.", IMPRINT, None, '<meta name="robots" content="noindex">\n'),
+    ("imprint", "Imprint | Aura Arbor", "Legal information about Aura Arbor, c/o Berger Digital Partners, Trimbach, Switzerland.", IMPRINT, None, '<meta name="robots" content="noindex">\n'),
     ("privacy-policy", "Privacy Policy | Aura Arbor", "How Aura Arbor processes personal data in the app and on this website.", PRIVACY, None, ""),
     ("404", "Page not found | Aura Arbor", "This page doesn't exist.", NOTFOUND, None, '<meta name="robots" content="noindex">\n'),
 ]
