@@ -69,7 +69,7 @@ img{max-width:100%;display:block}
 .site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;padding-top:14px;margin-bottom:-78px}
 .nav{position:relative;display:flex;align-items:center;gap:24px;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:10px;padding:10px 10px 10px 20px;box-shadow:0 10px 30px -12px rgba(15,29,24,.35)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:500;letter-spacing:.08em;font-size:.95rem;color:var(--ink);margin-right:auto}
-.brand svg{width:26px;height:26px;flex:none}
+.brand .logo{width:30px;height:30px;flex:none;display:block}
 .nav-links{display:flex;gap:24px;list-style:none;margin:0;padding:0}
 .nav-links a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--ink-2)}
 .nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--teal)}

@@ -14,10 +14,7 @@ OUT = ROOT / "site"
 SITE = "https://auraarbor.com"
 YEAR = 2026
 
-LOGO = ('<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="none" stroke="#20B896" stroke-width="2.2"/>'
-        '<path d="M16 27v-9" stroke="#20B896" stroke-width="2.4" stroke-linecap="round"/>'
-        '<path d="M16 18c0-5 3.5-8.5 9-9-.3 5.5-4 9-9 9z" fill="#20B896"/>'
-        '<path d="M16 20c-.4-4-3.4-6.8-8-7 .2 4.4 3.4 7 8 7z" fill="#008C7A"/></svg>')
+LOGO = '<img class="logo" src="assets/img/logo.svg" alt="" width="30" height="30">'  # official Aura Arbor mark, vectorized from the original
 CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>'
 NAV = [("environments.html", "Environments"), ("coaching-tools.html", "Coaching Tools"),
        ("spatial-objects.html", "Spatial Objects"), ("faq.html", "FAQ")]
@@ -94,6 +91,8 @@ def layout(slug, title, desc, body, active=None, extra_head="", og_image="og-ima
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0F1D18">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Figtree:wght@400;500;600&amp;display=swap">
