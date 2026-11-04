@@ -23,3 +23,5 @@ Prefer WebP (quality ~80). Sizes are the recommended export width; height follow
 | `og-image.jpg` | Social share preview | 1200×630 | 1200 | new |
 
 Heroes sit under a dark gradient on the left, so keep the main subject on the right half.
+
+Generation prompts for every image (Nano Banana): [image-prompts.md](image-prompts.md).
