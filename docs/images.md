@@ -20,7 +20,7 @@ Prefer WebP (quality ~80). Sizes are the recommended export width; height follow
 | `tools-whiteboard.webp` | Coaching Tools | 4:3 | 1400 | `coaching_2.png` or new |
 | `hero-objects.webp` | Spatial Objects hero | ~16:9 | 2400 | new |
 | `objects.webp` | Spatial Objects | 4:3 | 1400 | `objects.png` |
-| `og-image.jpg` | Social share preview | 1200×630 | 1200 | interim crop of the home hero; dedicated image still open |
+| `og-image.jpg` | Social share preview | 1200×630 | 1200 | dedicated sprout image (04.11.2026) |
 
 Heroes sit under a dark gradient on the left, so keep the main subject on the right half.
 
