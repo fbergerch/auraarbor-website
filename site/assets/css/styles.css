@@ -149,7 +149,7 @@ img{max-width:100%;display:block}
 .steps strong{display:block;font-family:var(--font-display);font-weight:600;font-size:1.05rem;margin-bottom:2px}
 .steps span{color:rgba(255,255,255,.72);font-size:1rem}
 .how-grid > .frame{min-height:420px}
-.how-grid > .frame img{object-position:60% 50%}
+.how-grid > .frame img{object-position:50% 50%}
 @media (max-width:900px){
   .how-grid{grid-template-columns:1fr}
   .how-copy{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
