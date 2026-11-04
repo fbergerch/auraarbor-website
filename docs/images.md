@@ -1,6 +1,6 @@
 # Images
 
-Drop the final images into `site/assets/img/` with exactly these names. Until a file exists, the page shows a tinted green stand-in labeled with the file name.
+All images are in `site/assets/img/` (delivered 04.11.2026, generated with Nano Banana, cropped and converted to WebP q80). To replace one, keep the file name. Until a file exists, the page shows a tinted green stand-in labeled with the file name.
 
 Prefer WebP (quality ~80). Sizes are the recommended export width; height follows the aspect ratio.
 
@@ -20,7 +20,7 @@ Prefer WebP (quality ~80). Sizes are the recommended export width; height follow
 | `tools-whiteboard.webp` | Coaching Tools | 4:3 | 1400 | `coaching_2.png` or new |
 | `hero-objects.webp` | Spatial Objects hero | ~16:9 | 2400 | new |
 | `objects.webp` | Spatial Objects | 4:3 | 1400 | `objects.png` |
-| `og-image.jpg` | Social share preview | 1200×630 | 1200 | new |
+| `og-image.jpg` | Social share preview | 1200×630 | 1200 | interim crop of the home hero; dedicated image still open |
 
 Heroes sit under a dark gradient on the left, so keep the main subject on the right half.
 

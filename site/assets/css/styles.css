@@ -86,6 +86,7 @@ img{max-width:100%;display:block}
 /* ---------- Heroes ---------- */
 .hero{position:relative;color:#fff;display:flex;align-items:center;background:var(--forest)}
 .hero > .frame{position:absolute;inset:0}
+.hero > .frame img{object-position:70% 50%} /* heroes keep their subject right; holds it in view on phones */
 .hero > .frame.is-missing{background:radial-gradient(ellipse at 66% 78%,#7FB24A 0%,#2E5A2A 30%,#132A1D 70%,var(--forest) 100%)}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,22,17,.84) 0%,rgba(10,22,17,.5) 45%,rgba(10,22,17,.05) 80%),linear-gradient(0deg,rgba(10,22,17,.55),transparent 40%)}
 .hero-inner{position:relative;z-index:1;width:100%}
@@ -148,6 +149,7 @@ img{max-width:100%;display:block}
 .steps strong{display:block;font-family:var(--font-display);font-weight:600;font-size:1.05rem;margin-bottom:2px}
 .steps span{color:rgba(255,255,255,.72);font-size:1rem}
 .how-grid > .frame{min-height:420px}
+.how-grid > .frame img{object-position:60% 50%}
 @media (max-width:900px){
   .how-grid{grid-template-columns:1fr}
   .how-copy{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
