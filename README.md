@@ -39,7 +39,7 @@ Website von **Aura Arbor**, der immersiven Coaching-Plattform. Statisches HTML/C
 - Jede Sektionsüberschrift muss alle Karten/Punkte darunter abdecken.
 - Öffentlich **nicht** verwenden: Marktgrössen, Wettbewerbsvergleiche, Preise/Business-Modell, Funding, datierte Roadmap. Die Website verkauft ein Werkzeug, nicht ein Investment.
 - Keine erfundenen Zahlen, Kunden oder Zitate. Testimonials nur mit schriftlicher Freigabe der Person.
-- Claim im Hero: «Built in Switzerland».
+- Claim im Hero: «Built in Switzerland». Herkunft nur als «developed in Switzerland» – kein VRFX, kein Lucerne.
 
 **Kontakt**
 - Adresse: Aura Arbor, c/o Berger Digital Partners, Quaistrasse 53, 4632 Trimbach, Switzerland · hello@auraarbor.com

@@ -352,10 +352,10 @@ HOME = f'''<section class="hero hero-home" id="top">
       <span class="eyebrow">Who we are</span>
       <h2>Swiss-built. Coach-shaped.</h2>
       <div class="prose">
-        <p>Aura Arbor is developed in Lucerne, Switzerland, by VRFX Realtime Studio, a team that has been building professional real-time and VR experiences for years.</p>
+        <p>Aura Arbor is developed in Switzerland by a team that has been building professional real-time and VR experiences for years.</p>
         <p>The coaching methodology behind the product comes from working coaches, not from a product roadmap. Every environment, object and tool has been tested in real sessions with real clients, and refined based on what came back.</p>
       </div>
-      <p class="swiss">{SWISS}Developed in Lucerne by VRFX Realtime Studio GmbH</p>
+      <p class="swiss">{SWISS}Developed in Switzerland</p>
     </div>
   </div>
 </section>

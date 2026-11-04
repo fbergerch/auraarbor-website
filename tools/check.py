@@ -34,6 +34,7 @@ ALLOWED_EXTERNAL_HOSTS = {
 FORBIDDEN = {  # Regex (Gross-/Kleinschreibung egal) → Begründung
     r"Hirschengraben": "alte Adresse – neu: c/o Berger Digital Partners, Quaistrasse 53, 4632 Trimbach",
     r"Built in Lucerne": "Claim lautet «Built in Switzerland»",
+    r"VRFX|Lucerne": "Aura Arbor wird ohne Firmen- und Ortsnennung als «developed in Switzerland» beschrieben",
     r"lorem ipsum": "Platzhaltertext",
     r"\bVR[- ]apps?\b": "Positionierung: «immersive coaching platform», nie «VR app»",
 }
